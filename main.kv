@@ -1,0 +1,419 @@
+<MainWid>:
+    id: wid_kv
+
+    Screen:
+        name: "screen_inicial"
+        FloatLayout:
+            orientation: "vertical"
+
+            FitImage:
+                source: "fondo1.png"
+
+            MDFillRoundFlatIconButton:
+                id: entrar
+                text: "Entrar"
+                icon: "racquetball"
+                size_hint: 0.3,0.1
+                pos_hint: {'x': 0.35,'y': 0.1}
+                color: 0,0.5,1
+                determinate_time: 1
+                determinate: True
+                on_press:
+                    wid_kv.crear_db()
+
+    Screen:
+        name: "game_cof"
+        FloatLayout:
+            FitImage:
+                source: "fondo2.png"
+
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_x": 0.1, "center_y": 0.95}
+                on_press:
+                    root.transition.direction = "down"
+                    root.current = "nav"
+
+            MDTextButton:
+                text: "Home"
+                font_style: "H4"
+                pos_hint: {"center_x": 0.25, "center_y": 0.9}
+                on_press:
+
+            MDTextButton:
+                text: "Guest"
+                font_style: "H4"
+                pos_hint: {"center_x": 0.75, "center_y": 0.9}
+                on_press:
+
+            Spinner:
+                id: lista_t1_p1
+                canvas.before:
+                    Color:
+                        rgb: 0.8,0,0
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15,15,15,15]
+                text: "Delantero?"
+                values: wid_kv.lista_de_nombres
+                background_color: 0,0,0,0
+                size_hint: 0.3,0.1
+                pos_hint: {"center_x": 0.25, "center_y": 0.8}
+
+            Spinner:
+                id: lista_t1_p2
+                canvas.before:
+                    Color:
+                        rgb: 0.8,0,0
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15,15,15,15]
+                text: "Zaguero?"
+                values: wid_kv.lista_de_nombres
+                background_color: 0,0,0,0
+                size_hint: 0.3,0.1
+                pos_hint: {"center_x": 0.25, "center_y": 0.6}
+
+            MDIconButton:
+                id: random_b
+                icon: "shuffle-variant"
+                theme_text_color: 'Custom'
+                text_color: "#57bd92"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                on_press: wid_kv.random_vs()
+
+            Spinner:
+                id: lista_t2_p1
+                canvas.before:
+                    Color:
+                        rgb: 0,0,0.8
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15,15,15,15]
+                text: "Delantero?"
+                values: wid_kv.lista_de_nombres
+                background_color: 0,0,0,0
+                size_hint: 0.3,0.1
+                pos_hint: {"center_x": 0.75, "center_y": 0.8}
+
+            Spinner:
+                id: lista_t2_p2
+                canvas.before:
+                    Color:
+                        rgb: 0,0,0.8
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15,15,15,15]
+                text: "Zaguero?"
+                values: wid_kv.lista_de_nombres
+                background_color: 0,0,0,0
+                size_hint: 0.3,0.1
+                pos_hint: {"center_x": 0.75, "center_y": 0.6}
+
+            MDCheckbox:
+                id: casual
+                active: True
+                group: "partida"
+                size_hint: 0.1,0.1
+                pos_hint: {"center_x": 0.1, "center_y": 0.4}
+
+            Label:
+                text: "Mejor de 18"
+                color: 0.5,0.5,0.5
+                pos_hint: {"x": -0.15, "center_y": 0.4}
+
+            MDCheckbox:
+                group: "partida"
+                size_hint: 0.1,0.1
+                pos_hint: {"center_x": 0.1, "center_y": 0.32}
+
+            Label:
+                text: "Mejor de 21"
+                color: 0.5,0.5,0.5
+                pos_hint: {"x": -0.15, "center_y": 0.32}
+
+    Screen:
+        name: 'nav'
+        MDBottomNavigation:
+            panel_color: 0.2,0,0.5
+            text_color_normal: 0.9, 0.9, 0, 1
+            text_color_active: 0.6, 0, 0, 1
+            MDBottomNavigationItem:
+                name: "screen_principal"
+                text: "Juego"
+                icon: "sword-cross"
+                disabled: False
+                on_tab_press: wid_kv.menu_res()
+
+                FloatLayout:
+                    FitImage:
+                        source: "fondo2.png"
+
+                    MDTextButton:
+                        id: corm
+                        text: "00:00"
+                        theme_text_color: 'Custom'
+                        text_color: "#57bd92"
+                        font_size: 50
+                        pos_hint: {"center_x": 0.5, "center_y": 0.95}
+
+                    MDIconButton:
+                        icon: "table-cog"
+                        theme_text_color: 'Custom'
+                        text_color: "#57bd92"
+                        pos_hint: {'center_x': 0.1, 'y': 0.9}
+                        on_press:
+                            root.transition.direction = "up"
+                            root.current = "game_cof"
+
+                    MDIconButton:
+                        icon: "hand-coin"
+                        theme_text_color: 'Custom'
+                        text_color: "#57bd92"
+                        pos_hint: {'center_x': 0.9, 'y': 0.9}
+                        on_press:
+
+                    MDTextButton:
+                        text: "vs"
+                        font_size: 100
+                        color: 1,1,1
+                        pos_hint: {'center_x': 0.5,'center_y': 0.65}
+                        on_press:
+
+                    MDFloatingActionButton:
+                        id: poit_a
+                        icon: "numeric-positive-1"
+                        pos_hint: {'center_x': 0.2,'y': 0.25}
+                        on_press: wid_kv.punto_a()
+                        disabled: True
+
+                    MDFloatingActionButton:
+                        id: poit_a_neg
+                        icon: "numeric-negative-1"
+                        pos_hint: {'center_x': 0.2,'y': 0.05}
+                        on_press: wid_kv.neg_punto_a()
+                        disabled: True
+
+                    MDTextButton:
+                        id: tablero_a
+                        text: '0'
+                        font_size: 200
+                        pos_hint: {'center_x': 0.2,'center_y': 0.65}
+                        color: 0,0.5,1
+                        on_press: wid_kv.doble()
+                        disabled: True
+
+                    MDTextButton:
+                        id: tablero_r
+                        text: '0'
+                        font_size: 200
+                        pos_hint: {'center_x': 0.8,'center_y': 0.65}
+                        color: 0.8,0,0
+                        on_press: wid_kv.doble()
+                        disabled: True
+
+                    MDFloatingActionButton:
+                        id: poit_r
+                        icon: "numeric-positive-1"
+                        pos_hint: {'center_x': 0.8,'y': 0.25}
+                        on_press: wid_kv.punto_r()
+                        disabled: True
+
+                    MDFloatingActionButton:
+                        id: poit_r_neg
+                        icon: "numeric-negative-1"
+                        pos_hint: {'center_x': 0.8,'y': 0.05}
+                        on_press: wid_kv.neg_punto_r()
+                        disabled: True
+
+                    MDFloatingActionButton:
+                        id: iniciar_cancelar
+                        icon: "racquetball"
+                        pos_hint: {'center_x': 0.5,'y': 0.05}
+                        on_press:
+                            wid_kv.iniciar_cancelar()
+
+            MDBottomNavigationItem:
+                name: "screen_edit"
+                icon: "notebook-edit"
+                text: "Cuaderno"
+                disabled: False
+                on_tab_press: wid_kv.menu_res()
+
+                FitImage:
+                    source: "fondo2.png"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+
+                    MDTopAppBar:
+                        left_action_items: [["account-search", lambda x: wid_kv.perfil_info()]]
+
+                    MDScrollView:
+                        id: datas
+                        opacity: 0
+                        MDList:
+                            TwoLineIconListItem:
+                                text: "Canchas Jugadas"
+                                secondary_text: wid_kv.partidas
+                                IconLeftWidget:
+                                    icon: "sword-cross"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "Victorias"
+                                secondary_text: wid_kv.victorias
+                                IconLeftWidget:
+                                    icon: "trophy"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "Derrotas"
+                                secondary_text: wid_kv.derrotas
+                                IconLeftWidget:
+                                    icon: "trophy-broken"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "Abandonos"
+                                secondary_text: wid_kv.abandonos
+                                IconLeftWidget:
+                                    icon: "alert"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "Dobles"
+                                secondary_text: wid_kv.dl
+                                IconLeftWidget:
+                                    icon: "numeric-2-box"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "Triples"
+                                secondary_text: wid_kv.tr
+                                IconLeftWidget:
+                                    icon: "numeric-3-box"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "ACES"
+                                secondary_text: wid_kv.ac
+                                IconLeftWidget:
+                                    icon: "poker-chip"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "Ratio de Dobles"
+                                secondary_text: wid_kv.r_dl
+                                IconLeftWidget:
+                                    icon: "numeric-2-box-multiple"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "Ratio de Triples"
+                                secondary_text: wid_kv.r_tr
+                                IconLeftWidget:
+                                    icon: "numeric-3-box-multiple"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "Promedio de victorias"
+                                secondary_text: wid_kv.r_victorias
+                                IconLeftWidget:
+                                    icon: "trophy"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+                            TwoLineIconListItem:
+                                text: "Promedio de Derrotas"
+                                secondary_text: wid_kv.r_derrotas
+                                IconLeftWidget:
+                                    icon: "trophy-broken"
+                                    theme_text_color: 'Custom'
+                                    text_color: "#57bd92"
+
+                FloatLayout:
+                    MDTextField:
+                        opacity: 1
+                        id: player_name
+                        mode: "round"
+                        hint_text: "Cual jugador?"
+                        helper_text: "Program by SiK1512"
+                        max_text_length: 10
+                        pos_hint: {'center_x': 0.6,'center_y': 0.95}
+                        size_hint: 0.7,None
+
+                    Spinner:
+                        id: menu_drop
+                        values: wid_kv.lista_de_nombres
+                        size_hint: 1,0.1
+                        color: 0,0,0,0.8
+                        background_color: 0,0,0,0
+                        pos_hint: {'x': 0.8,'y': 0.9}
+                        on_text: wid_kv.menu_sel()
+
+                    MDIcon:
+                        icon: "select-search"
+                        theme_text_color: 'Custom'
+                        text_color: "#57bd92"
+                        pos_hint: {'center_x': 0.85,'center_y': 0.95}
+
+                    MDIcon:
+                        id: fondo_icon
+                        icon: "account-question"
+                        font_size: 200
+                        theme_text_color: "Custom"
+                        text_color: 0.6,0.6,0.6
+                        pos_hint: {"center_x": 0.5,"center_y": 0.5}
+
+                    MDFloatingActionButton:
+                        icon: "account-plus"
+                        on_press: wid_kv.nuevo_jugador()
+                        pos_hint: {'x': 0.8 ,'y': 0.5}
+
+                    MDFloatingActionButton:
+                        icon: "account-edit"
+                        pos_hint: {'x': 0.8,'y':0.35}
+                        on_press: wid_kv.renombrar_jugador()
+
+                    MDFloatingActionButton:
+                        icon: "account-remove"
+                        on_press: wid_kv.eliminar_jugador()
+                        pos_hint: {'x': 0.8,'y': 0.2}
+
+                    MDFloatingActionButton:
+                        icon: "account-alert"
+                        pos_hint: {'x': 0.8,'y': 0.05}
+                        on_press: wid_kv.reportar()
+
+            MDBottomNavigationItem:
+                name: "Partidas"
+                icon: "scoreboard"
+                text: "Canchas"
+                disabled: False
+                on_tab_press:
+                    wid_kv.lista_on()
+                    wid_kv.menu_res()
+
+                FitImage:
+                    source: "fondo2.png"
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    MDTopAppBar:
+                        title: wid_kv.top_name
+                        right_action_items:
+                            [
+                            ["account-sync",lambda x: wid_kv.limpiar_jugadores()],
+                            ["archive-sync",lambda x: wid_kv.limpiar_partidas()]
+                            ]
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        MDScrollView:
+                            MDGridLayout:
+                                id: lista
+                                cols: 1
+                                adaptive_height: True
